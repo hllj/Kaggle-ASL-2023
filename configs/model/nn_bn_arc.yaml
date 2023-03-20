@@ -1,0 +1,17 @@
+arcface: True
+arch:
+  _target_: model.ASLLinearModel
+  in_features: ${dataset.in_features}
+  first_out_features: 1024
+  num_classes: 250
+  num_blocks: 3
+  drop_rate: 0.4
+
+loss:
+  _target_: loss.ArcMarginProduct
+  in_features: 256
+  out_features: 250
+  scale: 30.0
+  margin: 0.50
+  easy_margin: False
+  ls_eps: 0.0

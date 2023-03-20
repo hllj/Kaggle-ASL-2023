@@ -1,0 +1,5 @@
+arch:
+  _target_: model.ASLModel
+  p: 0.2
+  in_features: 3258
+  n_class: 250

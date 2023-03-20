@@ -1,0 +1,40 @@
+name: baseline
+seed: 42
+work_dir: ${hydra:runtime.cwd}
+
+logging:
+  root: ./logs
+
+defaults:
+  - model: baseline
+  - _self_
+
+dataset:
+  feature_data : "data/v1/feature_data.npy"
+  feature_labels : "data/v1/feature_labels.npy"
+  train_batch_size : 512
+  val_batch_size : 512
+  num_workers: 4
+  in_features : 3258
+  out_features : 250
+
+training:
+  epoch: 350
+  criterion:
+    _target_: torch.nn.CrossEntropyLoss
+  optimizer:
+    _target_: torch.optim.Adam
+    lr: 3e-4
+    weight_decay: 1e-6
+  scheduler:
+    _target_: torch.optim.lr_scheduler.CosineAnnealingLR
+    T_max: 300
+    eta_min: 3e-5
+  
+
+device : "cuda:0"
+num_workers : 8
+
+hydra:
+  run:
+    dir: ./exp/${name}_${now:%Y-%m-%d}_${now:%H-%M-%S}
